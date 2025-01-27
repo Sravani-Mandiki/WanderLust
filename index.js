@@ -25,7 +25,6 @@ const userRouter=require('./routes/user.js');
 
 // const { required } = require('joi');
 
-// const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 const dbUrl=process.env.ATLASDB_URL;
 
 
@@ -66,9 +65,6 @@ const sessionOptions={
   }
 };
 
-// app.get("/",(req,res)=>{
-//   res.send("Hii, I am Root");
-// });
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -87,35 +83,9 @@ app.use((req,res,next)=>{
   next();
 });
 
-// app.get('/demouser',async (req,res)=>{
-//   let fakeUser=new User({
-//     email:"student@gmail.com",
-//     username:"delta-student"
-//   });
-
-//   let registeredUser=await User.register(fakeUser,"helloworld");
-//   res.send(registeredUser);
-// });
-
 app.use('/listings',listingRouter);
 app.use('/listings/:id/reviews',reviewRouter)
 app.use('/',userRouter);
-
-
-
-// app.get("/testListing",async (req,res)=>{
-//   let sampleListing=new Listing({
-//     title:"My new Villa",
-//     description:"By the beach",
-//     price:1200,
-//     location:"Calangute,Goa",
-//     country:"India"
-//   });
-
-//   await sampleListing.save();
-//   console.log(sampleListing);
-//   res.send("Successfull testing");
-// });
 
 
 app.all("*",(req,res,next)=>{
@@ -125,7 +95,7 @@ app.all("*",(req,res,next)=>{
 app.use((err,req,res,next)=>{
   let {statusCode=500,message="Something went wrong"}=err;
   res.status(statusCode).render("Error.ejs",{message});
-  // res.status(statusCode).send(message);
+  
 });
 
 app.listen(8080,()=>{
